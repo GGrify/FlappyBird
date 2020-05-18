@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <birditem.h>
 #include "savesfile.h"
+#include <QPushButton>
 
 class Scene : public QGraphicsScene
 {
@@ -31,7 +32,9 @@ public:
     void setTopCounter();
     void setNullTopCounter();
     void showGameOverGraphics();
+    void showReachedLvlGraphics();
     void currentLvl(int lvl);
+    void hideReachedLvlGraphics();
 
 
 private:
@@ -50,6 +53,7 @@ private:
     savesFile *save;
 
     QGraphicsPixmapItem * gameOverPix;
+    QGraphicsPixmapItem * lvl2Pix;
     QGraphicsTextItem * scoreTextItem;
     QGraphicsPixmapItem * topCounterRight;
     QGraphicsPixmapItem * topCounterLeft;

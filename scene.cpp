@@ -3,14 +3,17 @@
 #include <QKeyEvent>
 #include "QDebug"
 
+#define lvlTwoScore 10
+
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),
     gameOn(false), score(0), scoreLeft(1),
-    scoreRight(0), lvl(1)
+    scoreRight(0)
 {
     setUpPillarTimer();
 
     save = new savesFile();
     bestScore = save->getFileScore();
+    lvl = save->readFileLvl();
 
 }
 
@@ -119,8 +122,8 @@ void Scene::incrementScore()
 
     QString pathCountsRight = ":/images/" + QString::number(scoreRight) + ".png";
 
-    if(score < 10) topCounterRight->setPixmap(QPixmap(pathCountsRight));
-    if(score >= 10 && score <= 99) {
+    if(score < lvlTwoScore) topCounterRight->setPixmap(QPixmap(pathCountsRight));
+    if(score >= lvlTwoScore && score <= 99) {
         QString pathCountsLeft = ":/images/" + QString::number(scoreLeft) + ".png";
         if((score % 10) == 0) {
             scoreLeft++;
@@ -136,12 +139,13 @@ void Scene::incrementScore()
         save->writeFileScore(bestScore);
     }
 
-    if((bestScore == 50) && (lvl == 1)) {
+
+    if((bestScore == lvlTwoScore) && (lvl == 1)) {
         pillarTimer->stop();
         freezeBirdAndPillarsInPlace();
         setGameOn(false);
-        showGameOverGraphics();
-        save->writeFileLvl("Lvl: 2");
+        showReachedLvlGraphics();
+        setNullTopCounter();
         lvl = 2;
     }
 
@@ -170,6 +174,14 @@ void Scene::showGameOverGraphics()
                                                   -gameOverPix->boundingRect().height() / 2));
 }
 
+void Scene::showReachedLvlGraphics()
+{
+    lvl2Pix = new QGraphicsPixmapItem(QPixmap(":/images/reached_lvl_2.png"));
+    addItem(lvl2Pix);
+    lvl2Pix->setPos(QPointF(0, 0) - QPointF(lvl2Pix->boundingRect().width() / 2,
+                                                lvl2Pix->boundingRect().height() / 2));
+}
+
 void Scene::currentLvl(int lvl)
 {
     switch (lvl) {
@@ -195,6 +207,16 @@ void Scene::hideGameOverGraphics()
         removeItem(scoreTextItem);
         delete scoreTextItem;
         scoreTextItem = nullptr;
+    }
+
+}
+
+void Scene::hideReachedLvlGraphics()
+{
+    if(lvl2Pix) {
+        removeItem(lvl2Pix);
+        delete lvl2Pix;
+        lvl2Pix = nullptr;
     }
 
 }

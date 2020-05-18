@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget> //Класс QWidget является базовым для всех объектов пользовательского интерфейса
+#include <QMouseEvent>
 #include "scene.h"
 #include "savesfile.h"
 
@@ -25,6 +26,9 @@ private slots:
     void getItemImagesOnLvl();
     void on_pushButton_2_clicked();
 
+protected:
+    void mousePressEvent(QMouseEvent *event);
+
 private:
     Ui::Widget *ui;
 
@@ -35,5 +39,6 @@ private:
     QString backgroundPhrasePath;
     QGraphicsPixmapItem *pixItem;
     QGraphicsPixmapItem *lvlItem;
+
 };
 #endif // WIDGET_H

@@ -5,6 +5,7 @@
 #include "pillaritem.h"
 #include <QFile>
 #include <QTextStream>
+#define lvlTwoScore 10
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -78,4 +79,19 @@ void Widget::on_pushButton_2_clicked()
     lvlItem->setPixmap(QPixmap(lvlPhrasePath));
     scene->currentLvl(save->readFileLvl());
     scene->startGame();
+}
+
+//об'эднати два аналогычны коди
+void Widget::mousePressEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton && lvlTwoScore == save->getFileScore() && save->readFileLvl() == 1) {
+        save->writeFileLvl("Lvl: 2");
+        scene->setNullTopCounter();
+        scene->hideReachedLvlGraphics();
+        getItemImagesOnLvl();
+        pixItem->setPixmap(QPixmap(backgroundPhrasePath));
+        lvlItem->setPixmap(QPixmap(lvlPhrasePath));
+        scene->currentLvl(save->readFileLvl());
+        scene->startGame();
+    }
 }
