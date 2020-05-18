@@ -26,7 +26,7 @@ PillarItem::PillarItem() :
             pillarSpeed = 1600;
         break;
         case 2:
-            pillarGap = 1;
+            pillarGap = 60;
             pillarSpeed = 1250;
         break;
     }

@@ -4,7 +4,7 @@
 #include "QDebug"
 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),
-    gameOn(false), score(0)
+    gameOn(false), score(0), lvl(1)
 {
     setUpPillarTimer();
 
@@ -96,12 +96,13 @@ void Scene::incrementScore()
         save->writeFileScore(bestScore);
     }
 
-    if(bestScore == 10) {
+    if((bestScore == 10) && (lvl == 1)) {
         pillarTimer->stop();
         freezeBirdAndPillarsInPlace();
         setGameOn(false);
         showGameOverGraphics();
         save->writeFileLvl("Lvl: 2");
+        lvl = 2;
     }
 
     qDebug() << "Score : " << score << "Best score : " << bestScore;
@@ -133,7 +134,10 @@ void Scene::currentLvl(int lvl)
 {
     switch (lvl) {
     case 1:
-
+        lvl = 1;
+    break;
+    case 2:
+        lvl = 2;
     break;
     }
 }

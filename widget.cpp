@@ -17,27 +17,15 @@ Widget::Widget(QWidget *parent)
 //    scene->addLine(-400, 0, 400, 0, QPen(Qt::blue));
 //    scene->addLine(0, -400, 0, 400, QPen(Qt::blue));
 
-    savesFile *save = new savesFile();
-    QString lvlPhrasePath;
-    QString backgroundPhrasePath;
+    save = new savesFile();
 
-    switch(save->readFileLvl()) {
-    case 1:
-        lvlPhrasePath = ":/images/lvl_1.png";
-        backgroundPhrasePath = ":/images/BG_2.png";
-        break;
-    case 2:
-        lvlPhrasePath = ":/images/lvl_2.png";
-        backgroundPhrasePath = ":/images/BG_3.png";
-        break;
-    }
+    getItemImagesOnLvl();
 
-    QGraphicsPixmapItem *pixItem = new QGraphicsPixmapItem(QPixmap(backgroundPhrasePath));
+    pixItem = new QGraphicsPixmapItem(QPixmap(backgroundPhrasePath));
     scene->addItem(pixItem);
     pixItem->setPos(QPointF(-262.5,-312.5));
 
-
-    QGraphicsPixmapItem *lvlItem = new QGraphicsPixmapItem(QPixmap(lvlPhrasePath));
+    lvlItem = new QGraphicsPixmapItem(QPixmap(lvlPhrasePath));
     scene->addItem(lvlItem);
     lvlItem->setPos(QPointF(-250,-300));
     scene->currentLvl(save->readFileLvl());
@@ -65,7 +53,25 @@ void Widget::on_pushButton_clicked()
     emit firstWindow(); // И вызываем сигнал на открытие главного окна
 }
 
+void Widget::getItemImagesOnLvl()
+{
+    switch(save->readFileLvl()) {
+    case 1:
+        lvlPhrasePath = ":/images/lvl_1.png";
+        backgroundPhrasePath = ":/images/BG_2.png";
+        break;
+    case 2:
+        lvlPhrasePath = ":/images/lvl_2.png";
+        backgroundPhrasePath = ":/images/BG_3.png";
+        break;
+    }
+}
+
 void Widget::on_pushButton_2_clicked()
 {
+    getItemImagesOnLvl();
+    pixItem->setPixmap(QPixmap(backgroundPhrasePath));
+    lvlItem->setPixmap(QPixmap(lvlPhrasePath));
+    scene->currentLvl(save->readFileLvl());
     scene->startGame();
 }

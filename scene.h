@@ -41,6 +41,7 @@ private:
     bool gameOn;
 
     int score;
+    int lvl;
     int bestScore;
     savesFile *save;
 

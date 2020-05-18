@@ -22,7 +22,7 @@ signals:
     void firstWindow();
 private slots:
     void on_pushButton_clicked();
-
+    void getItemImagesOnLvl();
     void on_pushButton_2_clicked();
 
 private:
@@ -30,5 +30,10 @@ private:
 
 private:
     Scene * scene;
+    savesFile *save;
+    QString lvlPhrasePath;
+    QString backgroundPhrasePath;
+    QGraphicsPixmapItem *pixItem;
+    QGraphicsPixmapItem *lvlItem;
 };
 #endif // WIDGET_H
