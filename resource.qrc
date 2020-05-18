@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/background-night.png</file>
+        <file>images/gameover.png</file>
+        <file>images/yellowbird-downflap.png</file>
+        <file>images/yellowbird-midflap.png</file>
+        <file>images/yellowbird-upflap.png</file>
+        <file>images/BG_2.png</file>
+        <file>images/pipe-green.png</file>
+        <file>images/lvl_1.png</file>
+        <file>images/lvl_2.png</file>
+        <file>images/BG_3.png</file>
+    </qresource>
+</RCC>
