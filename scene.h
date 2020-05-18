@@ -28,8 +28,11 @@ public:
     void incrementScore();
 
     void setScore(int value);
+    void setTopCounter();
+    void setNullTopCounter();
     void showGameOverGraphics();
     void currentLvl(int lvl);
+
 
 private:
     void hideGameOverGraphics();
@@ -41,12 +44,15 @@ private:
     bool gameOn;
 
     int score;
+    int scoreLeft, scoreRight;
     int lvl;
     int bestScore;
     savesFile *save;
 
     QGraphicsPixmapItem * gameOverPix;
     QGraphicsTextItem * scoreTextItem;
+    QGraphicsPixmapItem * topCounterRight;
+    QGraphicsPixmapItem * topCounterLeft;
 };
 
 #endif // SCENE_H

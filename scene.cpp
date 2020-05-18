@@ -4,7 +4,8 @@
 #include "QDebug"
 
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),
-    gameOn(false), score(0), lvl(1)
+    gameOn(false), score(0), scoreLeft(1),
+    scoreRight(0), lvl(1)
 {
     setUpPillarTimer();
 
@@ -76,6 +77,29 @@ void Scene::freezeBirdAndPillarsInPlace()
 void Scene::setScore(int value)
 {
     score = value;
+    scoreRight = value;
+    scoreLeft = 1;
+}
+
+void Scene::setTopCounter()
+{
+    qDebug() << "MUST WORK HERE!!!!!!!!!";
+    topCounterRight = new QGraphicsPixmapItem(QPixmap(":/images/0.png"));
+    topCounterLeft = new QGraphicsPixmapItem(QPixmap(""));
+    topCounterRight->setPos(QPointF(0, 0));
+    topCounterLeft->setZValue(1);
+    topCounterRight->setZValue(1);
+    this->addItem(topCounterRight);
+    this->addItem(topCounterLeft);
+
+    topCounterRight->setPos(QPointF(15, -300) - QPointF(topCounterRight->boundingRect().width() / 2, 0));
+    topCounterLeft->setPos(QPointF(-15, -300) - QPointF(topCounterRight->boundingRect().width() / 2, 0));
+}
+
+void Scene::setNullTopCounter()
+{
+    topCounterRight->setPixmap(QPixmap(":/images/0.png"));
+    topCounterLeft->setPixmap(QPixmap(""));
 }
 
 bool Scene::getGameOn() const
@@ -91,12 +115,28 @@ void Scene::setGameOn(bool value)
 void Scene::incrementScore()
 {
     score++;
+    scoreRight++;
+
+    QString pathCountsRight = ":/images/" + QString::number(scoreRight) + ".png";
+
+    if(score < 10) topCounterRight->setPixmap(QPixmap(pathCountsRight));
+    if(score >= 10 && score <= 99) {
+        QString pathCountsLeft = ":/images/" + QString::number(scoreLeft) + ".png";
+        if((score % 10) == 0) {
+            scoreLeft++;
+            scoreRight = 0;
+            pathCountsRight = ":/images/" + QString::number(scoreRight) + ".png";
+            topCounterLeft->setPixmap(QPixmap(pathCountsLeft));
+        }
+        topCounterRight->setPixmap(QPixmap(pathCountsRight));
+    }
+
     if(score > bestScore) {
         bestScore = score;
         save->writeFileScore(bestScore);
     }
 
-    if((bestScore == 10) && (lvl == 1)) {
+    if((bestScore == 50) && (lvl == 1)) {
         pillarTimer->stop();
         freezeBirdAndPillarsInPlace();
         setGameOn(false);
@@ -118,7 +158,7 @@ void Scene::showGameOverGraphics()
 
     scoreTextItem = new QGraphicsTextItem();
     QString htmlString = "<p> Score : " + QString::number(score) + " </p>"
-                                        + "<p> Best Score : " + QString::number(bestScore) + "</p>";
+            + "<p> Best Score : " + QString::number(bestScore) + "</p>";
 
     QFont mFont("Consolas", 30, QFont::Bold);
     scoreTextItem->setHtml(htmlString);
@@ -135,10 +175,10 @@ void Scene::currentLvl(int lvl)
     switch (lvl) {
     case 1:
         lvl = 1;
-    break;
+        break;
     case 2:
         lvl = 2;
-    break;
+        break;
     }
 }
 

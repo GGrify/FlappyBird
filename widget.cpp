@@ -14,8 +14,8 @@ Widget::Widget(QWidget *parent)
     scene = new Scene(this);
     scene->setSceneRect(-250,-300,500,600); // -250 -300 500 600
 
-//    scene->addLine(-400, 0, 400, 0, QPen(Qt::blue));
-//    scene->addLine(0, -400, 0, 400, QPen(Qt::blue));
+    scene->addLine(-400, 0, 400, 0, QPen(Qt::blue));
+    scene->addLine(0, -400, 0, 400, QPen(Qt::blue));
 
     save = new savesFile();
 
@@ -30,15 +30,18 @@ Widget::Widget(QWidget *parent)
     lvlItem->setPos(QPointF(-250,-300));
     scene->currentLvl(save->readFileLvl());
 
+
     //Устанавливает текущую сцену равной scene. Если сцена scene уже отображается этом видом, то эта функция ничего не делает.
     ui->graphicsView->setScene(scene);
 
     scene->addBird();
+    scene->setTopCounter();
     scene->showGameOverGraphics();
 }
 
 void Widget::showWidget()
 {
+    scene->setNullTopCounter();
     scene->startGame();
 }
 
@@ -69,6 +72,7 @@ void Widget::getItemImagesOnLvl()
 
 void Widget::on_pushButton_2_clicked()
 {
+    scene->setNullTopCounter();
     getItemImagesOnLvl();
     pixItem->setPixmap(QPixmap(backgroundPhrasePath));
     lvlItem->setPixmap(QPixmap(lvlPhrasePath));
