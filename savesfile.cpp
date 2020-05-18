@@ -20,15 +20,14 @@ int savesFile::readFileLvl()
     QTextStream in(&file);
 
       QString line = in.readLine(); // метод readLine() считывает одну строку из потока
-      if (QString::compare(line, "Lvl: 1") == 0) {
+      if (QString::compare(line, "Lvl: 1") == 0)
           return 1;
-      }
 
-      if (QString::compare(line, "Lvl: 2") == 0) {
+      if (QString::compare(line, "Lvl: 2") == 0)
           return 2;
-      }
 
       file.close();
+      return 0;
 }
 
 void savesFile::writeFileLvl(QString lvl)
