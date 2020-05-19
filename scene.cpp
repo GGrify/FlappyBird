@@ -2,6 +2,8 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QKeyEvent>
 #include "QDebug"
+#include <QDir>
+#include <QUrl>
 
 #define lvlTwoScore 10
 
@@ -14,6 +16,19 @@ Scene::Scene(QObject *parent) : QGraphicsScene(parent),
     save = new savesFile();
     bestScore = save->getFileScore();
     lvl = save->readFileLvl();
+
+    mPlayerPoint = new QMediaPlayer(this);          // Инициализация плеера
+    mPlayListPoint = new QMediaPlaylist(mPlayerPoint);  // Инициализация плейлиста
+
+    mPlayerHit = new QMediaPlayer(this);          // Инициализация плеера
+    mPlayListHit = new QMediaPlaylist(mPlayerPoint);  // Инициализация плейлиста
+
+    addSound(mPlayerHit, mPlayListHit, "qrc:/sounds/sfx_hit.mp3");
+
+    mPlayerPoint->setPlaylist(mPlayListPoint);      // Устанавливаем плейлист в плеер
+    mPlayListPoint->addMedia(QUrl("qrc:/sounds/sfx_point.mp3")); // Добавляем аудио в плейлист
+    mPlayListPoint->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);   // Проигрываем трек один раз
+
 
 }
 
@@ -42,6 +57,11 @@ void Scene::startGame()
 
 void Scene::setUpPillarTimer()
 {
+    m_player = new QMediaPlayer(this);          // Инициализация плеера
+    m_playlist = new QMediaPlaylist(m_player);  // Инициализация плейлиста
+
+    addSound(m_player, m_playlist, "qrc:/sounds/sfx_wing.mp3");
+
     pillarTimer = new QTimer(this);
     connect(pillarTimer, &QTimer::timeout, [=]() {
 
@@ -51,14 +71,13 @@ void Scene::setUpPillarTimer()
             pillarTimer->stop();
             freezeBirdAndPillarsInPlace();
             setGameOn(false);
+            mPlayerHit->play();
             showGameOverGraphics();
         });
 
         addItem(pillarItem);
 
     });
-
-    // pillarTimer->start(1000); начать добавлять pillars на сцену
 
 }
 
@@ -75,6 +94,13 @@ void Scene::freezeBirdAndPillarsInPlace()
             pillar->freezeInPlace();
         }
     }
+}
+
+void Scene::addSound(QMediaPlayer *m_player, QMediaPlaylist *m_playlist, QString path)
+{
+    m_player->setPlaylist(m_playlist);      // Устанавливаем плейлист в плеер
+    m_playlist->addMedia(QUrl(path)); // Добавляем аудио в плейлист
+    m_playlist->setPlaybackMode(QMediaPlaylist::CurrentItemOnce);   // Проигрываем трек один раз
 }
 
 void Scene::setScore(int value)
@@ -117,6 +143,7 @@ void Scene::setGameOn(bool value)
 
 void Scene::incrementScore()
 {
+    mPlayerPoint->play();
     score++;
     scoreRight++;
 
@@ -154,6 +181,9 @@ void Scene::incrementScore()
 
 void Scene::showGameOverGraphics()
 {
+
+
+
     gameOverPix = new QGraphicsPixmapItem(QPixmap(":/images/gameover.png"));
     addItem(gameOverPix);
     gameOverPix->setPos(QPointF(0, 0) - QPointF(gameOverPix->boundingRect().width() / 2,
@@ -179,7 +209,7 @@ void Scene::showReachedLvlGraphics()
     lvl2Pix = new QGraphicsPixmapItem(QPixmap(":/images/reached_lvl_2.png"));
     addItem(lvl2Pix);
     lvl2Pix->setPos(QPointF(0, 0) - QPointF(lvl2Pix->boundingRect().width() / 2,
-                                                lvl2Pix->boundingRect().height() / 2));
+                                            lvl2Pix->boundingRect().height() / 2));
 }
 
 void Scene::currentLvl(int lvl)
@@ -239,8 +269,13 @@ void Scene::cleanPillars()
 void Scene::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Space) {
-        if(gameOn)
+        if(gameOn) {
+           // m_player->play();
             bird->shootUp();
+            m_player->play();
+        } else {
+            m_player->stop();
+        }
     }
     QGraphicsScene::keyPressEvent(event);
 }
@@ -248,8 +283,10 @@ void Scene::keyPressEvent(QKeyEvent *event)
 void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) {
-        if(gameOn)
+        if(gameOn) {
+            m_player->play();
             bird->shootUp();
+        }
     }
     QGraphicsScene::mousePressEvent(event);
 

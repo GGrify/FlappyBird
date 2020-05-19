@@ -7,6 +7,13 @@
 #include <birditem.h>
 #include "savesfile.h"
 #include <QPushButton>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+
+/** Подключаем библиотеку, отвечающую за использование WinAPI
+ * Данная библиотека необходима для асинхронной проверки состояния клавиш
+ * */
+#include <windows.h>
 
 class Scene : public QGraphicsScene
 {
@@ -35,6 +42,7 @@ public:
     void showReachedLvlGraphics();
     void currentLvl(int lvl);
     void hideReachedLvlGraphics();
+    void stopSoundPointReached();
 
 
 private:
@@ -42,6 +50,7 @@ private:
     void cleanPillars();
     void setUpPillarTimer();
     void freezeBirdAndPillarsInPlace();
+    void addSound(QMediaPlayer * m_player, QMediaPlaylist * m_playlist, QString path);
     QTimer *pillarTimer;
     BirdItem * bird;
     bool gameOn;
@@ -57,6 +66,15 @@ private:
     QGraphicsTextItem * scoreTextItem;
     QGraphicsPixmapItem * topCounterRight;
     QGraphicsPixmapItem * topCounterLeft;
+
+    QMediaPlayer * m_player;        // Аудио плеер
+    QMediaPlaylist * m_playlist;    // Плейлист
+
+    QMediaPlayer * mPlayerPoint;        // Аудио плеер
+    QMediaPlaylist * mPlayListPoint;    // Плейлист
+
+    QMediaPlayer * mPlayerHit;        // Аудио плеер
+    QMediaPlaylist * mPlayListHit;    // Плейлист
 };
 
 #endif // SCENE_H

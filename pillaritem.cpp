@@ -26,8 +26,8 @@ PillarItem::PillarItem() :
             pillarSpeed = 1600;
         break;
         case 2:
-            pillarGap = 60;
-            pillarSpeed = 1250;
+            pillarGap = 70;
+            pillarSpeed = 1600;
         break;
     }
 
@@ -37,12 +37,12 @@ PillarItem::PillarItem() :
                                                  60));
 
     yPos = QRandomGenerator::global()->bounded(150); //задаємо yPosition наших pillars (
-    int xRandomizer = QRandomGenerator::global()->bounded(200); //200
+    int xRandomizer = QRandomGenerator::global()->bounded(2); //200
 
     setPos(QPointF(0,0) + QPointF(260 + xRandomizer, yPos));
 
     xAnimation = new QPropertyAnimation(this, "x", this); //x имя свойста, яке ми будемо линковать через Q_PROPERY
-    xAnimation->setStartValue(260 + xRandomizer);
+    xAnimation->setStartValue(260 + 240);
     xAnimation->setEndValue(-260);
     xAnimation->setEasingCurve(QEasingCurve::Linear);
     xAnimation->setDuration(pillarSpeed);
@@ -74,9 +74,10 @@ void PillarItem::freezeInPlace()
     xAnimation->stop();
 }
 
+
 void PillarItem::setX(qreal x)
 {
-   // qDebug() << "Pillar position: " << x;
+    qDebug() << "Pillar position: " << x;
     m_x = x;
 
     if(x < 0 && !pastBird) {
@@ -84,7 +85,8 @@ void PillarItem::setX(qreal x)
         QGraphicsScene * mScene = scene();
         Scene *myScene = dynamic_cast<Scene *>(mScene);
         if(myScene)
-            myScene->incrementScore();
+           myScene->incrementScore();
+
     }
 
     if(collidesWithBird()) {

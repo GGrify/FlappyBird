@@ -5,6 +5,8 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsPixmapItem>
 #include <QPropertyAnimation>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 
 class PillarItem : public QObject,  public QGraphicsItemGroup
 {
@@ -17,7 +19,7 @@ public:
     ~PillarItem(); //удаляєм наші блоки, які пташка пройшла, щоб вони не займали пам'ять
     qreal x() const;
 
-    void freezeInPlace();
+    void freezeInPlace();;
 
 signals:
     void collideFail();
@@ -39,6 +41,7 @@ private:
     int pillarSpeed;
     qreal m_x;
     bool pastBird;
+
 };
 
 #endif // PILLARITEM_H

@@ -21,5 +21,14 @@
         <file>images/8.png</file>
         <file>images/9.png</file>
         <file>images/reached_lvl_2.png</file>
+        <file>sounds/sfx_die.ogg</file>
+        <file>sounds/sfx_swooshing.ogg</file>
+        <file>sounds/sfx_wing.mp3</file>
+        <file>sounds/sfx_point.mp3</file>
+        <file>sounds/sfx_hit.mp3</file>
+        <file>images/main_menu_bg.png</file>
+        <file>images/start_btn.png</file>
+        <file>images/exit_btn.png</file>
+        <file>images/score_btn.png</file>
     </qresource>
 </RCC>
