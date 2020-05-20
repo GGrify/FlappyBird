@@ -10,6 +10,16 @@ savesFile::savesFile()
 int savesFile::readFileLvl()
 {
 
+    QFileInfo checkFile(QDir::currentPath() + "/saves.txt"); //перевірити чи існує saves.txt
+
+    if (!checkFile.exists() && !checkFile.isFile()) {
+        file.setFileName(QDir::currentPath() + "/saves.txt");
+        file.open(QIODevice::WriteOnly);
+        QTextStream out(&file); // поток записываемых данных направляем в файл
+        out << "Lvl: 1" << endl;
+        file.close();
+        }
+
     file.setFileName(QDir::currentPath() + "/saves.txt");
     // С помощью метода open() открываем файл в режиме чтения
     if (!file.open(QIODevice::ReadOnly)) {
