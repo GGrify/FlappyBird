@@ -270,11 +270,9 @@ void Scene::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Space) {
         if(gameOn) {
-           // m_player->play();
+            m_player->stop();
             bird->shootUp();
             m_player->play();
-        } else {
-            m_player->stop();
         }
     }
     QGraphicsScene::keyPressEvent(event);
@@ -284,8 +282,9 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton) {
         if(gameOn) {
-            m_player->play();
+            m_player->stop();
             bird->shootUp();
+            m_player->play();
         }
     }
     QGraphicsScene::mousePressEvent(event);

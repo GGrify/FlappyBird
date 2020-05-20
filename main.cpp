@@ -10,8 +10,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     //Widget w;
     mainMenu w;
-    w.setWindowTitle("Flappy bird - Demo edition");
-    w.setWindowIcon(QIcon("ico.png")); // встановити иконку
+    w.setWindowTitle("Flappy Fish - Demo edition");
+    w.setWindowIcon(QIcon(":/images/yellowbird-midflap.png")); // встановити иконку
     w.show();
     return a.exec();
 }

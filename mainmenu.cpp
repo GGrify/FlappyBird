@@ -19,7 +19,8 @@ mainMenu::~mainMenu()
 
 void mainMenu::on_pushButton_clicked()
 {
-
+    game->setWindowTitle("Flappy Fish - Demo edition");
+    game->setWindowIcon(QIcon(":/images/yellowbird-midflap.png"));
     game->show();  // Показываем второе окно
     game->showWidget();
     this->close();    // Закрываем основное окно
