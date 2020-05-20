@@ -5,8 +5,6 @@
 #include <QDir>
 #include <QUrl>
 
-#define lvlTwoScore 10
-
 Scene::Scene(QObject *parent) : QGraphicsScene(parent),
     gameOn(false), score(0), scoreLeft(1),
     scoreRight(0)
@@ -41,7 +39,14 @@ void Scene::addBird()
 void Scene::startGame()
 {
 
+    if(save->readFileLvl() == 0) {
+        hideGameOverGraphics();
+        showReachedLvlGraphics();
+        return;
+    }
+
     //Bird
+    this->setNullTopCounter();
     bird->startFlying();
     //Pillars
     if(!pillarTimer->isActive()) {
@@ -54,6 +59,7 @@ void Scene::startGame()
         pillarTimer->start(1000);
     }
 }
+
 
 void Scene::setUpPillarTimer()
 {
@@ -149,8 +155,8 @@ void Scene::incrementScore()
 
     QString pathCountsRight = ":/images/" + QString::number(scoreRight) + ".png";
 
-    if(score < lvlTwoScore) topCounterRight->setPixmap(QPixmap(pathCountsRight));
-    if(score >= lvlTwoScore && score <= 99) {
+    if(score < 10) topCounterRight->setPixmap(QPixmap(pathCountsRight));
+    if(score >= 10 && score <= 99) {
         QString pathCountsLeft = ":/images/" + QString::number(scoreLeft) + ".png";
         if((score % 10) == 0) {
             scoreLeft++;
@@ -174,6 +180,15 @@ void Scene::incrementScore()
         showReachedLvlGraphics();
         setNullTopCounter();
         lvl = 2;
+    }
+
+    if((bestScore == lastLvlScore) && (lvl == 2)) {
+        pillarTimer->stop();
+        freezeBirdAndPillarsInPlace();
+        setGameOn(false);
+        showReachedLvlGraphics();
+        setNullTopCounter();
+        lvl = 3;
     }
 
     qDebug() << "Score : " << score << "Best score : " << bestScore;
@@ -206,10 +221,22 @@ void Scene::showGameOverGraphics()
 
 void Scene::showReachedLvlGraphics()
 {
-    lvl2Pix = new QGraphicsPixmapItem(QPixmap(":/images/reached_lvl_2.png"));
-    addItem(lvl2Pix);
-    lvl2Pix->setPos(QPointF(0, 0) - QPointF(lvl2Pix->boundingRect().width() / 2,
-                                            lvl2Pix->boundingRect().height() / 2));
+    switch (lvl) {
+    case 1:
+        lvlReachedPix = new QGraphicsPixmapItem(QPixmap(":/images/reached_lvl_2.png"));
+        addItem(lvlReachedPix);
+        lvlReachedPix->setPos(QPointF(0, 0) - QPointF(lvlReachedPix->boundingRect().width() / 2,
+                                                lvlReachedPix->boundingRect().height() / 2));
+        break;
+    case 2:
+    case 0:
+        lvlReachedPix = new QGraphicsPixmapItem(QPixmap(":/images/reached_last_lvl.png"));
+        addItem(lvlReachedPix);
+        lvlReachedPix->setPos(QPointF(0, 0) - QPointF(lvlReachedPix->boundingRect().width() / 2,
+                                                lvlReachedPix->boundingRect().height() / 2));
+        break;
+    }
+
 }
 
 void Scene::currentLvl(int lvl)
@@ -243,12 +270,18 @@ void Scene::hideGameOverGraphics()
 
 void Scene::hideReachedLvlGraphics()
 {
-    if(lvl2Pix) {
-        removeItem(lvl2Pix);
-        delete lvl2Pix;
-        lvl2Pix = nullptr;
+    if(lvlReachedPix) {
+        removeItem(lvlReachedPix);
+        delete lvlReachedPix;
+        lvlReachedPix = nullptr;
     }
 
+}
+
+void Scene::bestScoreAndLvlInit()
+{
+    bestScore = save->getFileScore();
+    lvl = save->readFileLvl();
 }
 
 void Scene::cleanPillars()

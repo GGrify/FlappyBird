@@ -23,6 +23,7 @@ SOURCES += \
     pillaritem.cpp \
     savesfile.cpp \
     scene.cpp \
+    score.cpp \
     widget.cpp
     widget.cpp
     birditem.cpp
@@ -40,6 +41,7 @@ HEADERS += \
     pillaritem.h \
     savesfile.h \
     scene.h \
+    score.h \
     widget.h
     widget.h
     birditem.h
@@ -49,6 +51,7 @@ HEADERS += \
 
 FORMS += \
     mainmenu.ui \
+    score.ui \
     widget.ui
     widget.ui
 

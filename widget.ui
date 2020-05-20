@@ -41,9 +41,9 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>176</x>
      <y>620</y>
-     <width>171</width>
+     <width>179</width>
      <height>31</height>
     </rect>
    </property>
@@ -62,7 +62,7 @@
     <rect>
      <x>0</x>
      <y>620</y>
-     <width>171</width>
+     <width>179</width>
      <height>31</height>
     </rect>
    </property>
@@ -74,6 +74,25 @@
    </property>
    <property name="text">
     <string>Start Again</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_3">
+   <property name="geometry">
+    <rect>
+     <x>350</x>
+     <y>620</y>
+     <width>179</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Restart the game</string>
    </property>
   </widget>
  </widget>

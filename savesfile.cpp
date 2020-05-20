@@ -38,6 +38,10 @@ int savesFile::readFileLvl()
           return 2;
       }
 
+      if (QString::compare(line, "Lvl: end") == 0) {
+          return 0;
+      }
+
       file.close();
 }
 

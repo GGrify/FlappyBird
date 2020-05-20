@@ -30,5 +30,8 @@
         <file>images/start_btn.png</file>
         <file>images/exit_btn.png</file>
         <file>images/score_btn.png</file>
+        <file>images/reached_last_lvl.png</file>
+        <file>images/score_bg.png</file>
+        <file>images/btn_back.png</file>
     </qresource>
 </RCC>

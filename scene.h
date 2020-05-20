@@ -30,6 +30,7 @@ public:
     Scene(QObject *parent = nullptr); //explict
     void addBird();
     void startGame();
+    void restartGame();
 
     bool getGameOn() const;
     void setGameOn(bool value);
@@ -43,6 +44,7 @@ public:
     void currentLvl(int lvl);
     void hideReachedLvlGraphics();
     void stopSoundPointReached();
+    void bestScoreAndLvlInit();
 
 
 private:
@@ -62,7 +64,7 @@ private:
     savesFile *save;
 
     QGraphicsPixmapItem * gameOverPix;
-    QGraphicsPixmapItem * lvl2Pix;
+    QGraphicsPixmapItem * lvlReachedPix;
     QGraphicsTextItem * scoreTextItem;
     QGraphicsPixmapItem * topCounterRight;
     QGraphicsPixmapItem * topCounterLeft;

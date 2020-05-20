@@ -5,18 +5,21 @@
 #include "pillaritem.h"
 #include <QFile>
 #include <QTextStream>
-#define lvlTwoScore 10
+#define lvlTwoScore 3
+#define lastLvlScore 4
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Widget)
 {
+    setWindowFlags( Qt::Window | Qt::WindowTitleHint | Qt::CustomizeWindowHint );
+
     ui->setupUi(this);
     scene = new Scene(this);
     scene->setSceneRect(-250,-300,500,600); // -250 -300 500 600
 
-    scene->addLine(-400, 0, 400, 0, QPen(Qt::blue));
-    scene->addLine(0, -400, 0, 400, QPen(Qt::blue));
+//    scene->addLine(-400, 0, 400, 0, QPen(Qt::blue));
+//    scene->addLine(0, -400, 0, 400, QPen(Qt::blue));
 
     save = new savesFile();
 
@@ -42,7 +45,6 @@ Widget::Widget(QWidget *parent)
 
 void Widget::showWidget()
 {
-    scene->setNullTopCounter();
     scene->startGame();
 }
 
@@ -68,11 +70,25 @@ void Widget::getItemImagesOnLvl()
         lvlPhrasePath = ":/images/lvl_2.png";
         backgroundPhrasePath = ":/images/BG_3.png";
         break;
+
+    case 0:
+        lvlPhrasePath = ":/images/lvl_2.png";
+        backgroundPhrasePath = ":/images/BG_3.png";
+        break;
     }
 }
 
 void Widget::on_pushButton_2_clicked()
 {
+
+    if(lvlTwoScore == save->getFileScore() && save->readFileLvl() == 1) {
+        save->writeFileLvl("Lvl: 1");
+        save->writeFileScore(0);
+        scene->bestScoreAndLvlInit();
+        scene->hideReachedLvlGraphics();
+    }
+
+
     scene->setNullTopCounter();
     getItemImagesOnLvl();
     pixItem->setPixmap(QPixmap(backgroundPhrasePath));
@@ -94,4 +110,31 @@ void Widget::mousePressEvent(QMouseEvent *event)
         scene->currentLvl(save->readFileLvl());
         scene->startGame();
     }
+    if(event->button() == Qt::LeftButton && lastLvlScore == save->getFileScore() && save->readFileLvl() == 2) {
+        save->writeFileLvl("Lvl: end");
+//        scene->setNullTopCounter();
+//        scene->hideReachedLvlGraphics();
+//        getItemImagesOnLvl();
+//        pixItem->setPixmap(QPixmap(backgroundPhrasePath));
+//        lvlItem->setPixmap(QPixmap(lvlPhrasePath));
+        scene->currentLvl(save->readFileLvl());
+//        save->writeFileScore(0);
+        scene->startGame();
+    }
+}
+
+void Widget::on_pushButton_3_clicked()
+{
+    if(save->getFileScore() == lastLvlScore) {
+        scene->hideReachedLvlGraphics();
+    }
+    save->writeFileLvl("Lvl: 1");
+    save->writeFileScore(0);
+    scene->setNullTopCounter();
+    getItemImagesOnLvl();
+    pixItem->setPixmap(QPixmap(backgroundPhrasePath));
+    lvlItem->setPixmap(QPixmap(lvlPhrasePath));
+    scene->currentLvl(1);
+    scene->bestScoreAndLvlInit();
+    scene->startGame();
 }
