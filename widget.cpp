@@ -88,6 +88,13 @@ void Widget::on_pushButton_2_clicked()
         scene->hideReachedLvlGraphics();
     }
 
+    if(lastLvlScore == save->getFileScore()) {
+        save->writeFileLvl("Lvl: 2");
+        save->writeFileScore(lvlTwoScore);
+        //scene->bestScoreAndLvlInit();??????
+        scene->hideReachedLvlGraphics();
+    }
+
 
     scene->setNullTopCounter();
     getItemImagesOnLvl();
