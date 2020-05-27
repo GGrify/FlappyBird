@@ -186,7 +186,6 @@ void Scene::incrementScore()
         lvl = 3;
     }
 
-    qDebug() << "Score : " << score << "Best score : " << bestScore;
 }
 
 void Scene::showGameOverGraphics()

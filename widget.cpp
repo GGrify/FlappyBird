@@ -4,8 +4,6 @@
 #include <QGraphicsPixmapItem>
 #include <QTextStream>
 //дві глобальні змінні які вказують на необхідну кількість очок, щоб перейти на наступний рівень
-#define lvlTwoScore 10
-#define lastLvlScore 99
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -54,6 +52,18 @@ void Widget::on_backMenu_clicked() //back to menu btn
     emit firstWindow(); // Вызываем сигнал на открытие главного окна
 }
 
+void Widget::continueGame()
+{
+    save->writeFileLvl("Lvl: 2");
+    scene->setNullTopCounter();
+    scene->hideReachedLvlGraphics();
+    getItemImagesOnLvl();
+    pixItem->setPixmap(QPixmap(backgroundPhrasePath));
+    lvlItem->setPixmap(QPixmap(lvlPhrasePath));
+    scene->currentLvl(save->readFileLvl());
+    scene->startGame();
+}
+
 void Widget::getItemImagesOnLvl()
 {
     switch(save->readFileLvl()) {
@@ -75,7 +85,7 @@ void Widget::getItemImagesOnLvl()
 void Widget::on_startAgain_clicked() //start again btn
 {
 
-    if(lvlTwoScore == save->getFileScore() && save->readFileLvl() == 1) {
+    if((lvlTwoScore == save->getFileScore()) && (save->readFileLvl() == 1)) {
         save->writeFileLvl("Lvl: 1");
         save->writeFileScore(0);
         scene->bestScoreAndLvlInit();
@@ -103,14 +113,7 @@ void Widget::on_startAgain_clicked() //start again btn
 void Widget::mousePressEvent(QMouseEvent *event)
 {
     if(event->button() == Qt::LeftButton && lvlTwoScore == save->getFileScore() && save->readFileLvl() == 1) {
-        save->writeFileLvl("Lvl: 2");
-        scene->setNullTopCounter();
-        scene->hideReachedLvlGraphics();
-        getItemImagesOnLvl();
-        pixItem->setPixmap(QPixmap(backgroundPhrasePath));
-        lvlItem->setPixmap(QPixmap(lvlPhrasePath));
-        scene->currentLvl(save->readFileLvl());
-        scene->startGame();
+        continueGame();
     }
     if(event->button() == Qt::LeftButton && lastLvlScore == save->getFileScore() && save->readFileLvl() == 2) {
         save->writeFileLvl("Lvl: end");
@@ -134,5 +137,17 @@ void Widget::on_restartGame_clicked() //restart game btn
     scene->currentLvl(1);
     scene->bestScoreAndLvlInit(); //в сцені ініціалізувати по нулі відповідні змінні
     scene->startGame();
+}
+
+void Widget::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_Space && lvlTwoScore == save->getFileScore() && save->readFileLvl() == 1) {
+        continueGame();
+    }
+    if(event->key() == Qt::Key_Space && lastLvlScore == save->getFileScore() && save->readFileLvl() == 2) {
+        save->writeFileLvl("Lvl: end");
+        scene->currentLvl(save->readFileLvl());
+        scene->startGame();
+    }
 }
 

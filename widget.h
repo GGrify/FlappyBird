@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include "scene.h"
 #include "savesfile.h"
+#include <QKeyEvent>
 
 namespace Ui { class Widget; }
 
@@ -25,11 +26,13 @@ private slots:
     void getItemImagesOnLvl();
     void on_startAgain_clicked();
     void on_backMenu_clicked();
+    void continueGame();
 
     void on_restartGame_clicked();
 
 protected:
     void mousePressEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::Widget *ui;

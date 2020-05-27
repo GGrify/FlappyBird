@@ -5,8 +5,8 @@
 #include <QTextStream>
 #include <QFileInfo>
 
-#define lvlTwoScore 3
-#define lastLvlScore 4
+#define lvlTwoScore 10
+#define lastLvlScore 99
 
 
 class savesFile
