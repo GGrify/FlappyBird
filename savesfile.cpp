@@ -39,7 +39,7 @@ int savesFile::readFileLvl()
 void savesFile::writeFileLvl(QString lvl)
 {
     QTextStream out(stdout);
-    file.setFileName(QDir::currentPath() + "/saves.txt");
+    file.setFileName(QDir::currentPath() + "/saves");
 
     if (file.open(QIODevice::WriteOnly)) { //відкриваємо файл в режимі тільки для запису
         QTextStream out(&file); // поток записываемых данных направляем в файл

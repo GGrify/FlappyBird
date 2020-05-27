@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/background-night.png</file>
         <file>images/gameover.png</file>
         <file>images/yellowbird-downflap.png</file>
         <file>images/yellowbird-midflap.png</file>
