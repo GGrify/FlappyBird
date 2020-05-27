@@ -4,8 +4,8 @@
 #include <QGraphicsPixmapItem>
 #include <QTextStream>
 //дві глобальні змінні які вказують на необхідну кількість очок, щоб перейти на наступний рівень
-#define lvlTwoScore 3
-#define lastLvlScore 4
+#define lvlTwoScore 10
+#define lastLvlScore 99
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
