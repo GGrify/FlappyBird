@@ -1,16 +1,15 @@
 #include "savesfile.h"
 #include "QDebug" //для дебагінгу використовували
-#include <QDir>
 
 savesFile::savesFile(){}
 
 int savesFile::readFileLvl()
 {
-    QFileInfo checkFile(QDir::currentPath() + "/saves.txt"); //перевірити чи існує saves.txt
+    QFileInfo checkFile(QDir::currentPath() + "/saves"); //перевірити чи існує saves
 
     //якщо файл не існує, ми його створимо самі
     if (!checkFile.exists() && !checkFile.isFile()) {
-        file.setFileName(QDir::currentPath() + "/saves.txt");
+        file.setFileName(QDir::currentPath() + "/saves");
         file.open(QIODevice::WriteOnly);
         QTextStream out(&file); // поток записываемых данных направляем в файл
         out << "Lvl: 1" << endl; //починаємо гру з першого рівня
@@ -19,7 +18,7 @@ int savesFile::readFileLvl()
         return 1;
     }
 
-    file.setFileName(QDir::currentPath() + "/saves.txt");
+    file.setFileName(QDir::currentPath() + "/saves");
     if (!file.open(QIODevice::ReadOnly)) { //відкриваємо файл в режимі для зчитування
         qWarning("Cannot open file for reading"); // якщо файл не знайдено(для дебагінгу)
         return -1;

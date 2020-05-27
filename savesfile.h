@@ -4,6 +4,7 @@
 #include "QFile"
 #include <QTextStream>
 #include <QFileInfo>
+#include <QDir>
 
 #define lvlTwoScore 10
 #define lastLvlScore 99

@@ -51,7 +51,7 @@ void Scene::startGame()
         //СЮДА
         setScore(0);
         hideGameOverGraphics();
-        pillarTimer->start(1000);
+        pillarTimer->start(1000); //запуск таймера, який
     }
 }
 
@@ -67,7 +67,7 @@ void Scene::setUpPillarTimer()
     connect(pillarTimer, &QTimer::timeout, [=]() {
 
         PillarItem *pillarItem = new PillarItem();
-        //ВИРУБАЭМ ЫГРУ
+
         connect(pillarItem, &PillarItem::collideFail, [=]() {
             pillarTimer->stop();
             freezeFishAndPillarsInPlace();
