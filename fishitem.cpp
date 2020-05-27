@@ -1,14 +1,14 @@
-#include "birditem.h"
+#include "fishitem.h"
 #include <QTimer>
 #include <QTransform>
 #include <QGraphicsScene>
 
-BirdItem::BirdItem(QPixmap pixmap) :
+FishItem::FishItem(QPixmap pixmap) :
     wingPosition(WingPosition::Up),
     wingDirection(0)
 {
 
-    setPixmap(pixmap);
+    this->setPixmap(pixmap);
 
     QTimer * birdWingTimer = new QTimer(this);
     connect(birdWingTimer, &QTimer::timeout, [=]() {
@@ -16,7 +16,7 @@ BirdItem::BirdItem(QPixmap pixmap) :
     });
 
     birdWingTimer->start(80); //asdasd
-    groundPosition = scenePos().y() + 290;
+    groundPosition = scenePos().y() + 290; //+290, бо scenePos().y() по суті повертає центр
 
     yAnimation = new QPropertyAnimation(this, "y", this);
     yAnimation->setStartValue(scenePos().y());
@@ -28,11 +28,12 @@ BirdItem::BirdItem(QPixmap pixmap) :
 }
 
 //реалізація функції підняття пташки вгору
-void BirdItem::shootUp()
+void FishItem::shootUp()
 {
-    //зупиняємо анімації
+    if(y() - scene()->sceneRect().height()/8 > -375) { //обертка, щоб пташка не вилетіла за гору
     yAnimation->stop();
     rotationAnimation->stop();
+
 
     qreal curPosY = y(); //визиваєм геттер y, щоб получити координати пташки(тєкущі)
     yAnimation->setStartValue(curPosY);
@@ -46,26 +47,27 @@ void BirdItem::shootUp()
 
     yAnimation->start();
     rotateTo(-20, 200, QEasingCurve::OutCubic);
+}
 
 }
 
-void BirdItem::startFlying()
+void FishItem::startFlying()
 {
     yAnimation->start();
     rotateTo(90,1200,QEasingCurve::InQuad);
 }
 
-qreal BirdItem::rotation() const
+qreal FishItem::rotation() const
 {
     return m_rotation;
 }
 
-qreal BirdItem::y() const
+qreal FishItem::y() const
 {
     return m_y;
 }
 
-void BirdItem::setRotation(qreal rotation)
+void FishItem::setRotation(qreal rotation)
 {
     m_rotation = rotation;
     QPointF c = this->boundingRect().center();
@@ -73,16 +75,16 @@ void BirdItem::setRotation(qreal rotation)
     t.translate(c.x(), c.y());
     t.rotate(rotation);
     t.translate(-c.x(),-c.y());
-    setTransform(t);
+    setTransform(t); //Sets the item's current transformation matrix to matrix.
 }
 
-void BirdItem::setY(qreal y)
+void FishItem::setY(qreal y)
 {
     this->moveBy(0, y-m_y);
     m_y = y;
 }
 
-void BirdItem::rotateTo(const qreal &end, const int &duration, const QEasingCurve &curve)
+void FishItem::rotateTo(const qreal &end, const int &duration, const QEasingCurve &curve)
 {
         rotationAnimation->setStartValue(rotation());
         rotationAnimation->setEndValue(end);
@@ -92,7 +94,7 @@ void BirdItem::rotateTo(const qreal &end, const int &duration, const QEasingCurv
         rotationAnimation->start();
 }
 
-void BirdItem::fallToGroundIfNecessary()
+void FishItem::fallToGroundIfNecessary()
 {
     if(y() < groundPosition) {
         rotationAnimation->stop();
@@ -108,17 +110,15 @@ void BirdItem::fallToGroundIfNecessary()
     }
 }
 
-void BirdItem::freezeInPlace()
+void FishItem::freezeInPlace()
 {
     yAnimation->stop();
     rotationAnimation->stop();
 }
 
-void BirdItem::updatePixmap()
+void FishItem::updatePixmap()
 {
-
     if(wingPosition == WingPosition::Middle) {
-
         if(wingDirection) {
             //Up
             setPixmap(QPixmap(":/images/yellowbird-upflap.png"));

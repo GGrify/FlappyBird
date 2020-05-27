@@ -25,7 +25,7 @@ mainMenu::~mainMenu()
 }
 
 
-void mainMenu::on_pushButton_clicked()
+void mainMenu::on_pushButton_clicked() //start gane
 {
     game->setWindowTitle("Swimmy Fish");
     game->setWindowIcon(QIcon(":/images/yellowbird-midflap.png"));

@@ -1,17 +1,17 @@
-#ifndef BIRDITEM_H
-#define BIRDITEM_H
+#ifndef FISHITEM_H
+#define FISHITEM_H
 
 #include <QObject>
 #include <QGraphicsPixmapItem>
 #include <QPropertyAnimation>
 
-class BirdItem : public QObject, public QGraphicsPixmapItem
+class FishItem : public QObject, public QGraphicsPixmapItem
 {
     Q_OBJECT
     Q_PROPERTY(qreal rotation READ rotation WRITE setRotation)
     Q_PROPERTY(qreal y READ y WRITE setY)
 public:
-    BirdItem(QPixmap pixmap);
+    FishItem(QPixmap pixmap);
 
     void shootUp();
     void startFlying();
@@ -36,6 +36,7 @@ private:
         Middle,
         Down
     };
+
     void updatePixmap();
     WingPosition wingPosition;
     bool wingDirection; //0 : down, 1: up

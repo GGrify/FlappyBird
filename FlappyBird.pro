@@ -17,7 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    birditem.cpp \
+    fishitem.cpp \
     main.cpp \
     mainmenu.cpp \
     pillaritem.cpp \
@@ -26,7 +26,6 @@ SOURCES += \
     score.cpp \
     widget.cpp
     widget.cpp
-    birditem.cpp
     pillaritem.cpp
     scene.cpp
     mainmenu.cpp
@@ -36,7 +35,7 @@ RESOURCES += \
     resource.qrc
 
 HEADERS += \
-    birditem.h \
+    fishitem.h \
     mainmenu.h \
     pillaritem.h \
     savesfile.h \
@@ -44,7 +43,6 @@ HEADERS += \
     score.h \
     widget.h
     widget.h
-    birditem.h
     pillaritem.h
     mainmenu.h
     savesfile.h

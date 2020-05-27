@@ -5,8 +5,12 @@
 #include <QGraphicsItemGroup>
 #include <QGraphicsPixmapItem>
 #include <QPropertyAnimation>
-#include <QMediaPlayer>
-#include <QMediaPlaylist>
+
+#include "scene.h"
+#include "savesfile.h"
+
+#include <QGraphicsScene>
+#include "fishitem.h"
 
 class PillarItem : public QObject,  public QGraphicsItemGroup
 {
@@ -32,15 +36,16 @@ private:
     QGraphicsPixmapItem * topPillar; //верхня палка
     QGraphicsPixmapItem * bottomPillar; //нижня палка
     QPropertyAnimation * xAnimation; // анімація по осі x
+    savesFile *save;
 
-    bool collidesWithBird();
+    bool collidesWithFish();
 
     int yPos;
     int lvlPillar;
     int pillarGap;
     int pillarSpeed;
     qreal m_x;
-    bool pastBird;
+    bool pastFish;
 
 };
 

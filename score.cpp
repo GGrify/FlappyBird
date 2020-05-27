@@ -38,7 +38,7 @@ void Score::writeScoreOnLabel()
 
 void Score::writeRewardLabel()
 {
-    labelReward->setText("<a style=\"color: #fff; text-decoration: underline;\" href=\"https://rt.pornhub.com/\">Great! Click to claim reward...</a>");
+    labelReward->setText("<a style=\"color: #fff; text-decoration: underline;\" href=\"https://freesteam.ru/\">Great! Click to claim reward...</a>");
     labelReward->setTextInteractionFlags(Qt::TextBrowserInteraction);
     labelReward->setOpenExternalLinks(true);
     labelReward->setGeometry(140,150,231,18);

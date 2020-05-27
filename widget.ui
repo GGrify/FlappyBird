@@ -38,7 +38,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="backMenu">
    <property name="geometry">
     <rect>
      <x>176</x>
@@ -57,7 +57,7 @@
     <string>Back to menu</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="startAgain">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -76,7 +76,7 @@
     <string>Start Again</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="restartGame">
    <property name="geometry">
     <rect>
      <x>350</x>

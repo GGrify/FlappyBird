@@ -22,11 +22,11 @@ public:
 signals:
     void firstWindow();
 private slots:
-    void on_pushButton_clicked();
     void getItemImagesOnLvl();
-    void on_pushButton_2_clicked();
+    void on_startAgain_clicked();
+    void on_backMenu_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_restartGame_clicked();
 
 protected:
     void mousePressEvent(QMouseEvent *event);

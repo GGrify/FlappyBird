@@ -4,7 +4,7 @@
 #include <QGraphicsScene> //предоставляет поверхность для управления большим числом графических 2D элементов
 #include "pillaritem.h"
 #include <QTimer>
-#include <birditem.h>
+#include <fishitem.h>
 #include "savesfile.h"
 #include <QPushButton>
 #include <QMediaPlayer>
@@ -28,7 +28,7 @@ protected:
 
 public:
     Scene(QObject *parent = nullptr); //explict
-    void addBird();
+    void addFish();
     void startGame();
     void restartGame();
 
@@ -51,10 +51,10 @@ private:
     void hideGameOverGraphics();
     void cleanPillars();
     void setUpPillarTimer();
-    void freezeBirdAndPillarsInPlace();
+    void freezeFishAndPillarsInPlace();
     void addSound(QMediaPlayer * m_player, QMediaPlaylist * m_playlist, QString path);
     QTimer *pillarTimer;
-    BirdItem * bird;
+    FishItem * fish;
     bool gameOn;
 
     int score;
@@ -66,6 +66,7 @@ private:
     QGraphicsPixmapItem * gameOverPix;
     QGraphicsPixmapItem * lvlReachedPix;
     QGraphicsTextItem * scoreTextItem;
+
     QGraphicsPixmapItem * topCounterRight;
     QGraphicsPixmapItem * topCounterLeft;
 
